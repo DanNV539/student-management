@@ -1,0 +1,34 @@
+{
+  "name": "structure-api-mvc-express-nodejs",
+  "version": "1.0.0",
+  "description": "structure api mvc express nodejs",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon",
+    "lint": "eslint \"src/**/*.js\"",
+    "lint:fix": "eslint --fix \"src/**/*.js\"",
+    "prettier": "prettier --check \"src/**/(*.js)\"",
+    "prettier:fix": "prettier --write \"src/**/(*.js)\""
+  },
+  "keywords": [],
+  "author": "nguyenvandan0503@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "helmet": "^5.1.0",
+    "mongoose": "^6.3.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1"
+  }
+}
