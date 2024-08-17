@@ -17,7 +17,11 @@ const StudentSchema: Schema = new Schema({
   dateOfBirth: { type: Date, required: true },
   grades: { type: Map, of: Number },
   enrollmentDate: { type: Date, default: Date.now },
-  courses: [{ type: Schema.Types.ObjectId, ref: 'Course' }]
+  courses: [{ type: Schema.Types.ObjectId, ref: 'Course' }],
+  enrollments: {
+    type: Schema.Types.ObjectId,
+    ref: 'Enrollment'
+  }
 })
 
 export default mongoose.model<IStudent>('Student', StudentSchema)

@@ -11,7 +11,7 @@ const EnrollmentSchema: Schema = new Schema({
   student: { type: Schema.Types.ObjectId, ref: 'Student', required: true },
   course: { type: Schema.Types.ObjectId, ref: 'Course', required: true },
   enrollmentDate: { type: Date, default: Date.now },
-  status: { type: String, required: true }
+  status: { type: String, required: true, default: 'Enrolled' }
 })
 
 export default mongoose.model<IEnrollment>('Enrollment', EnrollmentSchema)
