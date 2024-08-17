@@ -8,9 +8,9 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start:production": "tsc && node build/server.js",
-    "start:dev": "tsc --watch & nodemon build/server.js",
+    "start:dev": "tsc && tsc-alias --watch & nodemon build/server.js",
     "lint": "eslint \"src/**/*.{js,ts}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,ts}\"",
     "prettier": "prettier --check \"src/**/(*.js|*.ts)\"",
