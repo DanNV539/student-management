@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // Set the JavaScript version
+    "module": "NodeNext", // Use esm module system
+    "strict": true, // Enable strict type-checking options
+    "esModuleInterop": true, // Enables interop between CommonJS and ES modules
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "outDir": "build", // Output directory for compiled files
+    "rootDir": ".", // Root directory of your source files
+    "moduleResolution": "NodeNext", // Resolve modules like Node.js
+    "resolveJsonModule": true, // Include modules for importing JSON files
+    "sourceMap": true, // Generates corresponding .map files
+    "allowJs": true,
+    "baseUrl": ".", // Base directory for non-relative module names
+    "paths": {
+      // Configure paths to your modules
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["./**/*"], // Files to include in the compilation
+  "exclude": ["node_modules", "build"] // Exclude specific files or directories
+}

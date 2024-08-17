@@ -1,6 +1,4 @@
-'use strict'
-
-module.export = {
+export const REASON_PHRASES = {
   /**
    * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.3.3
    *

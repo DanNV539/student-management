@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'student-management',
-      script: './server.js',
+      script: './src/server.ts',
       exec_mode: 'cluster',
       instances: 4,
       watch: true,
