@@ -4,13 +4,12 @@ import express from 'express'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import compression from 'compression'
-import { CustomErrorType } from './v1/errors/CustomError.js'
-import { NotFoundError } from './v1/errors/error.response.js'
 import 'dotenv/config'
-import connectToDatabase from './v1/databases/mongo.init.js'
-import routes from './v1/routes/index.js'
+import connectToDatabase from './databases/mongo.init.js'
+import { NotFoundError } from './errors/error.response.js'
+import { CustomErrorType } from './errors/CustomError.js'
+import routes from './routes/index.js'
 
-// Initialize environment variables
 const app = express()
 
 //init dbs
