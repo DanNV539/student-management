@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "start:production": "tsc && tsc-alias && node build/server.js",
-    "start:dev": "tsc && tsc-alias --watch & nodemon build/server.js",
+    "start:dev": "NODE_ENV=pro tsc && tsc-alias --watch & nodemon build/server.js",
     "lint": "eslint \"src/**/*.{js,ts}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,ts}\"",
     "prettier": "prettier --check \"src/**/(*.js|*.ts)\"",

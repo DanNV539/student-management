@@ -9,11 +9,11 @@ const connectToDatabase = async () => {
   }
 
   try {
+    mongoose.set('strictQuery', false)
     await mongoose.connect(uri)
     console.log('Connected to MongoDB')
   } catch (error) {
     console.error('Error connecting to MongoDB:', error)
-    process.exit(1)
   }
 }
 
