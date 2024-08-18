@@ -2,8 +2,6 @@ import swaggerJSDoc from 'swagger-jsdoc'
 import { components } from './components.js'
 import config from '@/config/setting.config.js'
 
-console.log('URL ==========>', `http://${config.app.host}:${config.app.port}/api/v1`)
-
 const swaggerDefinition = {
   definition: {
     openapi: '3.0.0',
