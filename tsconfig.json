@@ -15,7 +15,8 @@
     "paths": {
       // Configure paths to your modules
       "@/*": ["src/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./types/custom.d.ts"]
   },
   "include": ["./**/*"], // Files to include in the compilation
   "exclude": ["node_modules", "build"] // Exclude specific files or directories

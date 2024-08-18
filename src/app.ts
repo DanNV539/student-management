@@ -11,6 +11,7 @@ import { CustomErrorType } from './errors/CustomError.js'
 import routes from './routes/index.js'
 import swaggerV1 from './swagger/swaggerV1.js'
 import swaggerV2 from './swagger/swaggerV2.js'
+import { versionMiddleware } from './middlewares/index.js'
 
 const app = express()
 
@@ -27,6 +28,7 @@ app.use(
     extended: true
   })
 )
+app.use(versionMiddleware)
 
 // Swagger setup for V1
 const swaggerUiV1 = swaggerUi.setup(swaggerV1)
