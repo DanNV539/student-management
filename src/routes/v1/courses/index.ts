@@ -1,11 +1,6 @@
 import { Router } from 'express'
-import {
-  createCourse,
-  getAllCourses,
-  getCourseById,
-  updateCourse,
-  deleteCourse
-} from '@/controllers/v1/course.controller.js'
+import { CourseController } from '@/controllers/v1/course.controller.js'
+import asyncHandler from '@/middlewares/index.js'
 
 const router = Router()
 
@@ -58,7 +53,7 @@ const router = Router()
  *       500:
  *         description: Server error
  */
-router.get('/', getAllCourses)
+router.get('/', asyncHandler(CourseController.getAllCourses))
 
 /**
  * @swagger
@@ -83,7 +78,7 @@ router.get('/', getAllCourses)
  *       404:
  *         description: Course not found
  */
-router.get('/:id', getCourseById)
+router.get('/:id', asyncHandler(CourseController.getCourseById))
 
 /**
  * @swagger
@@ -107,7 +102,7 @@ router.get('/:id', getCourseById)
  *       500:
  *         description: Server error
  */
-router.post('/', createCourse)
+router.post('/', asyncHandler(CourseController.createCourse))
 
 /**
  * @swagger
@@ -140,7 +135,7 @@ router.post('/', createCourse)
  *       500:
  *         description: Server error
  */
-router.put('/:id', updateCourse)
+router.put('/:id', asyncHandler(CourseController.updateCourse))
 
 /**
  * @swagger
@@ -163,6 +158,6 @@ router.put('/:id', updateCourse)
  *       500:
  *         description: Server error
  */
-router.delete('/:id', deleteCourse)
+router.delete('/:id', asyncHandler(CourseController.deleteCourse))
 
 export default router

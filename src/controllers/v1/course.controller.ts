@@ -1,92 +1,47 @@
 import { Request, Response } from 'express'
-import Course from '@/models/course.model.js'
-
-// Create a new course
-export const createCourse = async (req: Request, res: Response) => {
-  try {
-    const course = new Course(req.body)
-    await course.save()
-    res.status(201).json(course)
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
+import { CourseService } from '@/services/v1/course.service.js'
+import { CREATED, OK } from '@/errors/success.response.js'
+export class CourseController {
+  static async createCourse(req: Request, res: Response) {
+    return new CREATED({
+      message: 'Create course successfully',
+      metadata: await CourseService.createCourse(req.body)
+    }).send(res)
   }
-}
 
-// Get all courses with pagination and sorting
-export const getAllCourses = async (req: Request, res: Response) => {
-  try {
+  static async getAllCourses(req: Request, res: Response) {
     const page = parseInt(req.query.page as string, 10) || 1
     const limit = parseInt(req.query.limit as string, 10) || 10
     const sortBy = (req.query.sortBy as string) || 'courseName'
     const order = (req.query.order as string) || 'asc'
 
-    const validSortBy = ['courseName', 'courseCode', 'description']
-    if (!validSortBy.includes(sortBy)) {
-      return res.status(400).json({ error: 'Invalid sortBy field' })
-    }
-    if (!['asc', 'desc'].includes(order)) {
-      return res.status(400).json({ error: 'Invalid order field' })
-    }
+    return new OK({
+      message: 'Get all courses successfully',
+      metadata: await CourseService.getAllCourses({ page, limit, sortBy, order })
+    }).send(res)
+  }
 
-    const skip = (page - 1) * limit
+  static async getCourseById(req: Request, res: Response) {
+    return new OK({
+      message: 'Get course detail successfully',
+      metadata: await CourseService.getCourseById({ courseId: req.params.id })
+    }).send(res)
+  }
 
-    const courses = await Course.find()
-      .sort({ [sortBy]: order === 'asc' ? 1 : -1 })
-      .skip(skip)
-      .limit(limit)
-      .populate('instructor')
-      .populate('classroom')
+  static async updateCourse(req: Request, res: Response) {
+    const courseId = req.params.id
+    const course = req.body
 
-    const totalCourses = await Course.countDocuments()
+    return new OK({
+      message: 'Update course successfully',
+      metadata: await CourseService.updateCourse({ courseId, course })
+    }).send(res)
+  }
 
-    res.json({
-      total: totalCourses,
-      page,
-      limit,
-      data: courses
+  static async deleteCourse(req: Request, res: Response) {
+    return new OK({
+      message: 'Delete course successfully',
+      metadata: await CourseService.deleteCourse({ courseId: req.params.id })
     })
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
-  }
-}
-
-// Other CRUD functions remain unchanged
-
-// Get a course by ID
-export const getCourseById = async (req: Request, res: Response) => {
-  try {
-    const course = await Course.findById(req.params.id).populate('students')
-    if (!course) {
-      return res.status(404).json({ error: 'Course not found' })
-    }
-    res.json(course)
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
-  }
-}
-
-// Update a course
-export const updateCourse = async (req: Request, res: Response) => {
-  try {
-    const course = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('students')
-    if (!course) {
-      return res.status(404).json({ error: 'Course not found' })
-    }
-    res.json(course)
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
-  }
-}
-
-// Delete a course
-export const deleteCourse = async (req: Request, res: Response) => {
-  try {
-    const course = await Course.findByIdAndDelete(req.params.id)
-    if (!course) {
-      return res.status(404).json({ error: 'Course not found' })
-    }
-    res.json({ message: 'Course deleted successfully' })
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
   }
 }

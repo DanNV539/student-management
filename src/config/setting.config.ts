@@ -1,6 +1,7 @@
 type TConfig = {
   app: {
     port?: string
+    host?: string
   }
   db: {
     port?: string
@@ -14,7 +15,8 @@ type TConfig = {
 
 const dev: TConfig = {
   app: {
-    port: process.env.DEV_APP_PORT
+    port: process.env.DEV_APP_PORT,
+    host: process.env.DEV_APP_HOST
   },
   db: {
     port: process.env.DEV_DB_PORT,
@@ -28,7 +30,8 @@ const dev: TConfig = {
 
 const pro: TConfig = {
   app: {
-    port: process.env.PRO_APP_PORT
+    port: process.env.PRO_APP_PORT,
+    host: process.env.PRO_APP_HOST
   },
   db: {
     port: process.env.PRO_DB_PORT,

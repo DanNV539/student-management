@@ -1,11 +1,6 @@
+import asyncHandler from '@/middlewares/index.js'
 import { Router } from 'express'
-import {
-  createInstructor,
-  getAllInstructors,
-  getInstructorById,
-  updateInstructor,
-  deleteInstructor
-} from '@/controllers/v1/instructor.controller.js'
+import { InstructorController } from '@/controllers/v1/instructor.controller.js'
 
 const router = Router()
 
@@ -58,7 +53,7 @@ const router = Router()
  *       500:
  *         description: Server error
  */
-router.get('/', getAllInstructors)
+router.get('/', asyncHandler(InstructorController.getAllInstructors))
 
 /**
  * @swagger
@@ -83,7 +78,7 @@ router.get('/', getAllInstructors)
  *       404:
  *         description: Instructor not found
  */
-router.get('/:id', getInstructorById)
+router.get('/:id', asyncHandler(InstructorController.getInstructorById))
 
 /**
  * @swagger
@@ -107,7 +102,7 @@ router.get('/:id', getInstructorById)
  *       500:
  *         description: Server error
  */
-router.post('/', createInstructor)
+router.post('/', asyncHandler(InstructorController.createInstructor))
 
 /**
  * @swagger
@@ -140,7 +135,7 @@ router.post('/', createInstructor)
  *       500:
  *         description: Server error
  */
-router.put('/:id', updateInstructor)
+router.put('/:id', asyncHandler(InstructorController.updateInstructor))
 
 /**
  * @swagger
@@ -163,6 +158,6 @@ router.put('/:id', updateInstructor)
  *       500:
  *         description: Server error
  */
-router.delete('/:id', deleteInstructor)
+router.delete('/:id', asyncHandler(InstructorController.deleteInstructor))
 
 export default router

@@ -4,8 +4,6 @@ import config from '@/config/setting.config.js'
 const connectToDatabase = async () => {
   const uri = config.mongodb.uri
 
-  console.log('uri ===>', uri)
-
   if (!uri) {
     throw new Error('MongoDB URI is not defined')
   }

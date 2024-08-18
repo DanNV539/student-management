@@ -28,9 +28,6 @@ app.use(
   })
 )
 
-//router
-app.use(routes)
-
 // Swagger setup for V1
 const swaggerUiV1 = swaggerUi.setup(swaggerV1)
 app.use('/api-docs/v1', swaggerUi.serveFiles(swaggerV1, {}), swaggerUiV1)
@@ -38,6 +35,9 @@ app.use('/api-docs/v1', swaggerUi.serveFiles(swaggerV1, {}), swaggerUiV1)
 // Swagger setup for V2
 const swaggerUiV2 = swaggerUi.setup(swaggerV2)
 app.use('/api-docs/v2', swaggerUi.serveFiles(swaggerV2, {}), swaggerUiV2)
+
+//router
+app.use(routes)
 
 // Error Handling Middleware
 app.use((req: Request, res: Response, next: NextFunction) => {

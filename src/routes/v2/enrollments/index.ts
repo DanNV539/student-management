@@ -1,11 +1,6 @@
 import { Router } from 'express'
-import {
-  createEnrollment,
-  getAllEnrollments,
-  getEnrollmentById,
-  updateEnrollment,
-  deleteEnrollment
-} from '@/controllers/v2/enrollment.controller.js'
+import { EnrollmentController } from '@/controllers/v2/enrollment.controller.js'
+import asyncHandler from '@/middlewares/index.js'
 
 const router = Router()
 
@@ -58,7 +53,7 @@ const router = Router()
  *       500:
  *         description: Server error
  */
-router.get('/', getAllEnrollments)
+router.get('/', asyncHandler(EnrollmentController.getAllEnrollments))
 
 /**
  * @swagger
@@ -83,7 +78,7 @@ router.get('/', getAllEnrollments)
  *       404:
  *         description: Enrollment not found
  */
-router.get('/:id', getEnrollmentById)
+router.get('/:id', asyncHandler(EnrollmentController.getEnrollmentById))
 
 /**
  * @swagger
@@ -107,7 +102,7 @@ router.get('/:id', getEnrollmentById)
  *       500:
  *         description: Server error
  */
-router.post('/', createEnrollment)
+router.post('/', asyncHandler(EnrollmentController.createEnrollment))
 
 /**
  * @swagger
@@ -140,7 +135,7 @@ router.post('/', createEnrollment)
  *       500:
  *         description: Server error
  */
-router.put('/:id', updateEnrollment)
+router.put('/:id', asyncHandler(EnrollmentController.updateEnrollment))
 
 /**
  * @swagger
@@ -163,6 +158,6 @@ router.put('/:id', updateEnrollment)
  *       500:
  *         description: Server error
  */
-router.delete('/:id', deleteEnrollment)
+router.delete('/:id', asyncHandler(EnrollmentController.deleteEnrollment))
 
 export default router

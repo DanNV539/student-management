@@ -7,7 +7,6 @@ export interface ICourse extends Document {
   credits: number
   students: mongoose.Types.ObjectId[]
   instructor: mongoose.Types.ObjectId
-  classroom: mongoose.Types.ObjectId
 }
 
 const CourseSchema: Schema = new Schema({
@@ -16,8 +15,7 @@ const CourseSchema: Schema = new Schema({
   description: { type: String },
   credits: { type: Number, required: true },
   students: [{ type: Schema.Types.ObjectId, ref: 'Student' }],
-  instructor: { type: Schema.Types.ObjectId, ref: 'Instructor' },
-  classroom: { type: Schema.Types.ObjectId, ref: 'Classroom' }
+  instructor: { type: Schema.Types.ObjectId, ref: 'Instructor' }
 })
 
 export default mongoose.model<ICourse>('Course', CourseSchema)

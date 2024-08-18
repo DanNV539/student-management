@@ -1,92 +1,46 @@
 import { Request, Response } from 'express'
 import Instructor from '@/models/instructor.model.js'
+import { CREATED, OK } from '@/errors/success.response.js'
+import { InstructorService } from '@/services/v1/instructor.service.js'
 
-// Create a new instructor
-export const createInstructor = async (req: Request, res: Response) => {
-  try {
-    const instructor = new Instructor(req.body)
-    await instructor.save()
-    res.status(201).json(instructor)
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
+export class InstructorController {
+  static async createInstructor(req: Request, res: Response) {
+    return new CREATED({
+      message: 'Create instructor successfully',
+      metadata: await InstructorService.createInstructor(req.body)
+    }).send(res)
   }
-}
 
-// Get all instructors with pagination and sorting
-export const getAllInstructors = async (req: Request, res: Response) => {
-  try {
+  static async getAllInstructors(req: Request, res: Response) {
     const page = parseInt(req.query.page as string, 10) || 1
     const limit = parseInt(req.query.limit as string, 10) || 10
     const sortBy = (req.query.sortBy as string) || 'lastName'
     const order = (req.query.order as string) || 'asc'
 
-    const validSortBy = ['firstName', 'lastName', 'email']
-    if (!validSortBy.includes(sortBy)) {
-      return res.status(400).json({ error: 'Invalid sortBy field' })
-    }
-    if (!['asc', 'desc'].includes(order)) {
-      return res.status(400).json({ error: 'Invalid order field' })
-    }
+    return new OK({
+      message: 'Get instructors successfully',
+      metadata: await InstructorService.getAllInstructors({ page, limit, sortBy, order })
+    }).send(res)
+  }
 
-    const skip = (page - 1) * limit
-
-    const instructors = await Instructor.find()
-      .sort({ [sortBy]: order === 'asc' ? 1 : -1 })
-      .skip(skip)
-      .limit(limit)
-      .populate('department')
-      .populate('courses')
-
-    const totalInstructors = await Instructor.countDocuments()
-
-    res.json({
-      total: totalInstructors,
-      page,
-      limit,
-      data: instructors
+  static async getInstructorById(req: Request, res: Response) {
+    return new OK({
+      message: 'Get instructor successfully',
+      metadata: await InstructorService.getInstructorById({ instructorId: req.params.id })
     })
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
   }
-}
 
-// Other CRUD functions remain unchanged
-
-// Get an instructor by ID
-export const getInstructorById = async (req: Request, res: Response) => {
-  try {
-    const instructor = await Instructor.findById(req.params.id).populate('courses')
-    if (!instructor) {
-      return res.status(404).json({ error: 'Instructor not found' })
-    }
-    res.json(instructor)
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
+  static async updateInstructor(req: Request, res: Response) {
+    return new OK({
+      message: 'Update instructor successfully',
+      metadata: await InstructorService.updateInstructor({ instructorId: req.params.id, instructor: req.body })
+    }).send(res)
   }
-}
 
-// Update an instructor
-export const updateInstructor = async (req: Request, res: Response) => {
-  try {
-    const instructor = await Instructor.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('courses')
-    if (!instructor) {
-      return res.status(404).json({ error: 'Instructor not found' })
-    }
-    res.json(instructor)
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
-  }
-}
-
-// Delete an instructor
-export const deleteInstructor = async (req: Request, res: Response) => {
-  try {
-    const instructor = await Instructor.findByIdAndDelete(req.params.id)
-    if (!instructor) {
-      return res.status(404).json({ error: 'Instructor not found' })
-    }
-    res.json({ message: 'Instructor deleted successfully' })
-  } catch (error: any) {
-    res.status(400).json({ error: error.message })
+  static async deleteInstructor(req: Request, res: Response) {
+    return new OK({
+      message: 'Delete instructor successfully',
+      metadata: await InstructorService.deleteInstructor({ instructorId: req.params.id })
+    }).send(res)
   }
 }

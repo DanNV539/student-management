@@ -10,7 +10,7 @@ export abstract class CustomSuccess {
 
   constructor({ message, statusCode, reasonStatusCode = REASON_PHRASES.OK, metadata }: CustomSuccessType) {
     this.message = message || reasonStatusCode
-    this.statusCode = statusCode
+    this.statusCode = statusCode as number
     this.metadata = metadata
   }
 

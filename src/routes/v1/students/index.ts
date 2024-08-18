@@ -1,11 +1,6 @@
 import { Router } from 'express'
-import {
-  createStudent,
-  getAllStudents,
-  getStudentById,
-  updateStudent,
-  deleteStudent
-} from '@/controllers/v1/student.controller.js'
+import { StudentController } from '@/controllers/v1/student.controller.js'
+import asyncHandler from '@/middlewares/index.js'
 
 const router = Router()
 
@@ -13,14 +8,14 @@ const router = Router()
  * @swagger
  * /students:
  *   get:
- *     summary: Get all students
+ *     summary: Retrieve a list of students
  *     tags: [Students]
  *     parameters:
  *       - in: query
  *         name: page
  *         schema:
  *           type: integer
- *         description: Page number
+ *         description: Page number for pagination
  *       - in: query
  *         name: limit
  *         schema:
@@ -36,10 +31,10 @@ const router = Router()
  *         schema:
  *           type: string
  *           enum: [asc, desc]
- *         description: Sort order
+ *         description: Sorting order, either ascending (asc) or descending (desc)
  *     responses:
  *       200:
- *         description: The list of students
+ *         description: List of students retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -47,18 +42,23 @@ const router = Router()
  *               properties:
  *                 total:
  *                   type: integer
+ *                   description: Total number of students
  *                 page:
  *                   type: integer
+ *                   description: Current page number
  *                 limit:
  *                   type: integer
+ *                   description: Number of items per page
  *                 data:
  *                   type: array
+ *                   description: Array of student objects
  *                   items:
- *                     $ref: '#/components/schemas/Student'
+ *                    - $ref: '#/components/schemas/Student'
  *       500:
  *         description: Server error
  */
-router.get('/', getAllStudents)
+
+router.get('/', asyncHandler(StudentController.getAllStudents))
 
 /**
  * @swagger
@@ -83,7 +83,7 @@ router.get('/', getAllStudents)
  *       404:
  *         description: Student not found
  */
-router.get('/:id', getStudentById)
+router.get('/:id', asyncHandler(StudentController.getStudentById))
 
 /**
  * @swagger
@@ -107,7 +107,7 @@ router.get('/:id', getStudentById)
  *       500:
  *         description: Server error
  */
-router.post('/', createStudent)
+router.post('/', asyncHandler(StudentController.createStudent))
 
 /**
  * @swagger
@@ -140,7 +140,7 @@ router.post('/', createStudent)
  *       500:
  *         description: Server error
  */
-router.put('/:id', updateStudent)
+router.put('/:id', asyncHandler(StudentController.updateStudent))
 
 /**
  * @swagger
@@ -163,6 +163,6 @@ router.put('/:id', updateStudent)
  *       500:
  *         description: Server error
  */
-router.delete('/:id', deleteStudent)
+router.delete('/:id', asyncHandler(StudentController.deleteStudent))
 
 export default router
